@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In — Lightshare</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: #f8fafc; 
+            color: #1e293b; 
+            line-height: 1.6; 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        /* Updated container with modern styling */
+        .container { 
+            max-width: 400px; 
+            width: 100%; 
+            padding: 2.5rem; 
+            background: white; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        /* Added logo section */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        
+        h1 { 
+            font-size: 1.875rem; 
+            font-weight: 700; 
+            margin-bottom: 0.5rem; 
+            color: #0f172a; 
+            text-align: center; 
+        }
+        
+        .subtitle {
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+        
+        .form-group { 
+            margin-bottom: 1.5rem; 
+        }
+        
+        label { 
+            display: block; 
+            margin-bottom: 0.5rem; 
+            font-weight: 500; 
+            color: #374151;
+            font-size: 0.875rem;
+        }
+        
+        /* Enhanced input styling */
+        input[type="text"], input[type="password"] { 
+            width: 100%; 
+            padding: 0.875rem; 
+            border: 1px solid #d1d5db; 
+            border-radius: 8px; 
+            font-size: 0.875rem; 
+            transition: all 0.2s;
+            background: #ffffff;
+        }
+        
+        input[type="text"]:focus, input[type="password"]:focus { 
+            outline: none; 
+            border-color: #06b6d4; 
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        
+        /* Enhanced button styling */
+        .btn { 
+            width: 100%; 
+            padding: 0.875rem; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 0.875rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            background: #06b6d4; 
+            color: white;
+            margin-top: 0.5rem;
+        }
+        
+        .btn:hover { 
+            background: #0891b2; 
+            transform: translateY(-1px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Enhanced alert styling */
+        .alert { 
+            padding: 0.875rem; 
+            border-radius: 8px; 
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            border: 1px solid;
+        }
+        
+        .alert-error { 
+            background: #fef2f2; 
+            color: #dc2626; 
+            border-color: #fecaca; 
+        }
+        
+        /* Enhanced link styling */
+        .signup-link { 
+            text-align: center; 
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .signup-link p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        
+        .signup-link a { 
+            color: #06b6d4; 
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .signup-link a:hover { 
+            text-decoration: underline; 
+        }
+        
+        /* Added responsive design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Added logo section -->
+        <div class="logo-section">
+            <div class="logo">
+                <div class="logo-icon">L</div>
+                Lightshare
+            </div>
+        </div>
+        
+        <h1>Welcome back</h1>
+        <p class="subtitle">Sign in to your account to continue</p>
+        
+        <div id="alertContainer"></div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn">Sign In</button>
+        </form>
+        
+        <div class="signup-link">
+            <p>Don't have an account? <a href="/signup.html">Create one</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            if (!username || !password) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    window.location.href = '/get-started.html';
+                } else {
+                    showAlert(data.error || 'Login failed', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Network error. Please try again.', 'error');
+            }
+        });
+        
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alertDiv);
+        }
+        
+        // Check if already logged in
+        fetch('/api/auth/check', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    window.location.href = '/get-started.html';
+                }
+            });
+    </script>
+</body>
+</html>

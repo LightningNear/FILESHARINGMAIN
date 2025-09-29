@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started — Lightshare</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: #f8fafc; 
+            color: #1e293b; 
+            line-height: 1.6; 
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 3rem; 
+            background: white; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        h1 { 
+            font-size: 2.25rem; 
+            font-weight: 700; 
+            margin-bottom: 0.5rem; 
+            color: #0f172a; 
+        }
+        .subtitle { 
+            color: #64748b; 
+            margin-bottom: 3rem;
+            font-size: 1.125rem;
+        }
+        .workspace-actions { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 2rem; 
+            margin-top: 2rem; 
+        }
+        .workspace-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.2s;
+        }
+        .workspace-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1);
+        }
+        .workspace-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+        .workspace-card p {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+        .form-group { 
+            margin-bottom: 1.5rem; 
+        }
+        label { 
+            display: block; 
+            margin-bottom: 0.5rem; 
+            font-weight: 500; 
+            color: #374151;
+            font-size: 0.875rem;
+        }
+        input[type="text"] { 
+            width: 100%; 
+            padding: 0.875rem; 
+            border: 1px solid #d1d5db; 
+            border-radius: 8px; 
+            font-size: 0.875rem; 
+            transition: all 0.2s;
+            background: #ffffff;
+        }
+        input[type="text"]:focus { 
+            outline: none; 
+            border-color: #06b6d4; 
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        .btn { 
+            width: 100%;
+            padding: 0.875rem 1.5rem; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 0.875rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s;
+        }
+        .btn-primary { 
+            background: #06b6d4; 
+            color: white; 
+        }
+        .btn-primary:hover { 
+            background: #0891b2; 
+            transform: translateY(-1px);
+        }
+        .btn-secondary { 
+            background: #f1f5f9; 
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-secondary:hover { 
+            background: #e2e8f0; 
+            transform: translateY(-1px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .alert { 
+            padding: 0.875rem; 
+            border-radius: 8px; 
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            border: 1px solid;
+        }
+        .alert-error { 
+            background: #fef2f2; 
+            color: #dc2626; 
+            border-color: #fecaca; 
+        }
+        .alert-success { 
+            background: #f0fdf4; 
+            color: #16a34a; 
+            border-color: #bbf7d0; 
+        }
+        .logout-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        .logout-btn {
+            background: transparent;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            .workspace-actions {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            h1 {
+                font-size: 1.875rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">L</div>
+                Lightshare
+            </div>
+            <h1>Get Started</h1>
+            <p class="subtitle">Create or join a workspace to start sharing files securely with your team.</p>
+        </div>
+        
+        <div id="alertContainer"></div>
+        
+        <div class="workspace-actions">
+            <div class="workspace-card">
+                <h3>Create Workspace</h3>
+                <p>Start a new workspace and invite team members to collaborate</p>
+                <div class="form-group">
+                    <label for="createWorkspaceName">Workspace Name</label>
+                    <input type="text" id="createWorkspaceName" placeholder="Enter workspace name">
+                </div>
+                <button class="btn btn-primary" onclick="createWorkspace()">Create Workspace</button>
+            </div>
+            
+            <div class="workspace-card">
+                <h3>Join Workspace</h3>
+                <p>Enter an existing workspace name to join and start collaborating</p>
+                <div class="form-group">
+                    <label for="joinWorkspaceName">Workspace Name</label>
+                    <input type="text" id="joinWorkspaceName" placeholder="Enter workspace name">
+                </div>
+                <button class="btn btn-secondary" onclick="joinWorkspace()">Join Workspace</button>
+            </div>
+        </div>
+        
+        <div class="logout-section">
+            <button class="logout-btn" onclick="logout()">Sign Out</button>
+        </div>
+    </div>
+
+    <script>
+        async function createWorkspace() {
+            const name = document.getElementById('createWorkspaceName').value.trim();
+            if (!name) {
+                showAlert('Please enter a workspace name', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/workspace/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ name })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showAlert('Workspace created successfully!', 'success');
+                    setTimeout(() => {
+                        window.location.href = `/workspace.html?room=${encodeURIComponent(name)}`;
+                    }, 1000);
+                } else {
+                    if (response.status === 409) {
+                        showAlert('Warning: A workspace with this name already exists. Please choose a different name.', 'error');
+                    } else {
+                        showAlert(data.error || 'Failed to create workspace', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Create workspace error:', error);
+                showAlert('Network error. Please try again.', 'error');
+            }
+        }
+        
+        async function joinWorkspace() {
+            const name = document.getElementById('joinWorkspaceName').value.trim();
+            if (!name) {
+                showAlert('Please enter a workspace name', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/workspace/join', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ name })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showAlert('Joined workspace successfully!', 'success');
+                    setTimeout(() => {
+                        window.location.href = `/workspace.html?room=${encodeURIComponent(name)}`;
+                    }, 1000);
+                } else {
+                    if (response.status === 404) {
+                        showAlert('Warning: No workspace found with this name. Please check the name and try again.', 'error');
+                    } else {
+                        showAlert(data.error || 'Failed to join workspace', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Join workspace error:', error);
+                showAlert('Network error. Please try again.', 'error');
+            }
+        }
+        
+        async function logout() {
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    window.location.href = '/login.html';
+                } else {
+                    showAlert('Failed to logout', 'error');
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                showAlert('Network error during logout', 'error');
+            }
+        }
+        
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alertDiv);
+            
+            // Auto-hide success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            }
+        }
+        
+        // Handle Enter key press
+        document.getElementById('createWorkspaceName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') createWorkspace();
+        });
+        
+        document.getElementById('joinWorkspaceName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') joinWorkspace();
+        });
+        
+        // Check if user is logged in
+        fetch('/api/auth/check', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.loggedIn) {
+                    window.location.href = '/login.html';
+                }
+            })
+            .catch(() => {
+                window.location.href = '/login.html';
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace — Lightshare</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: #f8fafc; 
+            color: #1e293b; 
+            line-height: 1.6; 
+        }
+        
+        /* Updated header with clean, minimal design */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .workspace-info h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+        
+        .workspace-info p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        
+        .end-workspace-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.875rem;
+        }
+        
+        .end-workspace-btn:hover {
+            background: #dc2626;
+        }
+        
+        /* Updated main layout with clean grid design */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
+            height: calc(100vh - 100px);
+        }
+        
+        /* Updated chat section with minimal design */
+        .chat-section {
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 1.125rem;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem 2rem;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+        
+        .welcome-message {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            color: #92400e;
+            font-size: 0.875rem;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+        
+        .message.incoming {
+            background: #dbeafe;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+        }
+        
+        .message.outgoing {
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+        
+        .message.system {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+        }
+        
+        .message-header {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+        
+        .message-content {
+            font-weight: 500;
+        }
+        
+        /* Updated sidebar with clean, modern design */
+        .sidebar {
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .file-controls {
+            padding: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .alert-error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .alert-success {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.875rem;
+        }
+        
+        select, input[type="file"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            background: #ffffff;
+            transition: border-color 0.2s;
+        }
+        
+        select:focus, input[type="file"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        /* Updated members list with clean design */
+        .members-section {
+            padding: 2rem;
+            flex: 1;
+        }
+        
+        .members-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+        
+        .member {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #f8fafc;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+        
+        .member.creator {
+            background: #fef3c7;
+            color: #92400e;
+            font-weight: 500;
+        }
+        
+        /* Updated file viewer with clean design */
+        .file-viewer {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .file-viewer h4 {
+            color: #0f172a;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .file-viewer iframe, .file-viewer img, .file-viewer video {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .view-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .view-btn:hover {
+            background: #059669;
+        }
+        
+        .close-btn {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .close-btn:hover {
+            background: #dc2626;
+        }
+        
+        /* Added responsive design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .chat-section {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="workspace-info">
+            <h1 id="workspaceName">Loading...</h1>
+            <p id="workspaceStatus">Connecting...</p>
+        </div>
+        <button class="end-workspace-btn" onclick="endWorkspace()">End Workspace</button>
+    </div>
+    
+    <div class="main-content">
+        <div class="chat-section">
+            <div class="chat-header">File Transfer Chat</div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    Welcome to the workspace! You can send files to specific users or everyone.
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="file-controls">
+                <div id="alertContainer"></div>
+                
+                <div class="control-group">
+                    <label for="recipientSelect">Send to:</label>
+                    <select id="recipientSelect">
+                        <option value="all">All Users</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="fileTypeSelect">File Type:</label>
+                    <select id="fileTypeSelect">
+                        <option value="pdf">PDF (CRC32 Encryption)</option>
+                        <option value="image">Image (Hamming Code)</option>
+                        <option value="video">Video (AES-GCM)</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="fileInput">Select File:</label>
+                    <input type="file" id="fileInput" accept="*/*">
+                </div>
+                
+                <button class="btn btn-primary" id="sendBtn" onclick="sendFile()" disabled>Send File</button>
+            </div>
+            
+            <div class="members-section">
+                <h3>Workspace Members</h3>
+                <div id="membersList">
+                    <div class="member">Loading members...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket;
+        let currentUser;
+        let currentRoom;
+        let workspaceCreator;
+        let workspaceMembers = [];
+        
+        async function initializeWorkspace() {
+            // Check authentication
+            try {
+                const authResponse = await fetch('/api/auth/check', { credentials: 'include' });
+                const authData = await authResponse.json();
+                
+                if (!authData.loggedIn) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+                
+                currentUser = authData.user.username;
+                
+                // Get room from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                currentRoom = urlParams.get('room');
+                
+                if (!currentRoom) {
+                    window.location.href = '/get-started.html';
+                    return;
+                }
+                
+                document.getElementById('workspaceName').textContent = currentRoom;
+                
+                // Load workspace members
+                await loadWorkspaceMembers();
+                
+                // Initialize socket connection
+                initializeSocket();
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showAlert('Failed to initialize workspace', 'error');
+            }
+        }
+        
+        async function loadWorkspaceMembers() {
+            try {
+                const response = await fetch(`/api/workspace/${encodeURIComponent(currentRoom)}/members`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    workspaceMembers = data.members;
+                    workspaceCreator = data.creator;
+                    
+                    updateMembersList();
+                    updateRecipientDropdown();
+                } else {
+                    throw new Error('Failed to load members');
+                }
+            } catch (error) {
+                console.error('Load members error:', error);
+                showAlert('Failed to load workspace members', 'error');
+            }
+        }
+        
+        function updateMembersList() {
+            const membersList = document.getElementById('membersList');
+            membersList.innerHTML = '';
+            
+            workspaceMembers.forEach(member => {
+                const memberDiv = document.createElement('div');
+                memberDiv.className = `member ${member === workspaceCreator ? 'creator' : ''}`;
+                memberDiv.textContent = `${member}${member === workspaceCreator ? ' (Creator)' : ''}${member === currentUser ? ' (You)' : ''}`;
+                membersList.appendChild(memberDiv);
+            });
+        }
+        
+        function updateRecipientDropdown() {
+            const recipientSelect = document.getElementById('recipientSelect');
+            recipientSelect.innerHTML = '<option value="all">All Users</option>';
+            
+            workspaceMembers.forEach(member => {
+                if (member !== currentUser) {
+                    const option = document.createElement('option');
+                    option.value = member;
+                    option.textContent = member;
+                    recipientSelect.appendChild(option);
+                }
+            });
+        }
+        
+        function initializeSocket() {
+            socket = io();
+            
+            socket.on('connect', () => {
+                console.log('Connected to server');
+                socket.emit('joinRoom', { room: currentRoom, username: currentUser });
+            });
+            
+            socket.on('joinedRoom', (data) => {
+                document.getElementById('workspaceStatus').textContent = `Connected to ${data.room}`;
+                workspaceCreator = data.creator;
+                updateMembersList();
+            });
+            
+            socket.on('membersUpdate', (data) => {
+                workspaceMembers = data.members;
+                workspaceCreator = data.creator;
+                updateMembersList();
+                updateRecipientDropdown();
+            });
+            
+            socket.on('fileIncoming', (data) => {
+                const retransmitText = data.retransmit ? ` (Retransmission #${data.attempt})` : '';
+                addMessage(`Incoming file: ${data.filename} from ${data.sender}${retransmitText}`, 'incoming', data);
+            });
+            
+            socket.on('fileAcknowledged', (data) => {
+                addMessage('File sent successfully!', 'system');
+            });
+            
+            socket.on('transferFailed', (data) => {
+                addMessage(`File transfer failed: ${data.filename} - ${data.reason}`, 'system');
+                showAlert(`Transfer failed: ${data.reason}`, 'error');
+            });
+            
+            socket.on('workspaceDeleted', () => {
+                showAlert('Workspace has been deleted by the creator', 'error');
+                setTimeout(() => {
+                    window.location.href = '/get-started.html';
+                }, 2000);
+            });
+            
+            socket.on('error', (data) => {
+                showAlert(data.message, 'error');
+            });
+        }
+        
+        async function sendFile() {
+            const fileInput = document.getElementById('fileInput');
+            const recipientSelect = document.getElementById('recipientSelect');
+            const fileTypeSelect = document.getElementById('fileTypeSelect');
+            
+            if (!fileInput.files[0]) {
+                showAlert('Please select a file', 'error');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const recipient = recipientSelect.value;
+            const fileType = fileTypeSelect.value;
+            
+            // Validate file type
+            if (fileType === 'pdf' && !file.type.includes('pdf')) {
+                showAlert('Please select a PDF file for PDF encryption', 'error');
+                return;
+            }
+            if (fileType === 'image' && !file.type.startsWith('image/')) {
+                showAlert('Please select an image file for image encryption', 'error');
+                return;
+            }
+            if (fileType === 'video' && !file.type.startsWith('video/')) {
+                showAlert('Please select a video file for video encryption', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('room', currentRoom);
+            formData.append('recipient', recipient);
+            formData.append('ftype', fileType);
+            
+            try {
+                document.getElementById('sendBtn').disabled = true;
+                document.getElementById('sendBtn').textContent = 'Sending...';
+                
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const recipientText = recipient === 'all' ? 'everyone' : recipient;
+                    addMessage(`Sent ${file.name} to ${recipientText} (${fileType.toUpperCase()} encryption)`, 'outgoing');
+                    fileInput.value = '';
+                } else {
+                    const error = await response.json();
+                    showAlert(error.error || 'Failed to send file', 'error');
+                }
+            } catch (error) {
+                console.error('Send file error:', error);
+                showAlert('Network error while sending file', 'error');
+            } finally {
+                document.getElementById('sendBtn').disabled = false;
+                document.getElementById('sendBtn').textContent = 'Send File';
+            }
+        }
+        
+        function addMessage(content, type, fileData = null) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            
+            let messageHTML = `
+                <div class="message-header">${timestamp}</div>
+                <div class="message-content">${content}`;
+            
+            if (fileData && type === 'incoming') {
+                messageHTML += `<button class="view-btn" onclick="viewFile('${fileData.transferId}', '${fileData.filename}', '${fileData.ftype}')">View File</button>`;
+                
+                // Send acknowledgment
+                socket.emit('fileAck', { transferId: fileData.transferId });
+            }
+            
+            messageHTML += '</div>';
+            messageDiv.innerHTML = messageHTML;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        async function viewFile(transferId, filename, ftype) {
+            try {
+                showAlert('Loading file...', 'success');
+                
+                const response = await fetch(`/api/download/${transferId}`, {
+                    credentials: 'include'
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    
+                    if (errorData.willRetransmit) {
+                        showAlert(`File corrupted - retransmission scheduled in ${errorData.retransmitIn} seconds`, 'error');
+                        addMessage(`File viewing failed: ${errorData.details}. Retransmission will occur automatically.`, 'system');
+                        return;
+                    }
+                    
+                    throw new Error(errorData.error || 'Failed to download file');
+                }
+                
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                
+                // Create file viewer
+                const viewerDiv = document.createElement('div');
+                viewerDiv.className = 'file-viewer';
+                
+                let viewerContent = '';
+                if (ftype === 'pdf') {
+                    viewerContent = `<iframe src="${url}" type="application/pdf"></iframe>`;
+                } else if (ftype === 'image') {
+                    viewerContent = `<img src="${url}" alt="${filename}" onload="this.style.opacity=1" style="opacity:0;transition:opacity 0.3s">`;
+                } else if (ftype === 'video') {
+                    viewerContent = `<video controls preload="metadata"><source src="${url}" type="video/mp4"></video>`;
+                }
+                
+                viewerDiv.innerHTML = `
+                    <h4>Viewing: ${filename}</h4>
+                    ${viewerContent}
+                    <button class="close-btn" onclick="this.parentElement.remove(); URL.revokeObjectURL('${url}')">Close</button>
+                `;
+                
+                document.getElementById('chatMessages').appendChild(viewerDiv);
+                document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+                
+                showAlert('File loaded successfully!', 'success');
+                
+            } catch (error) {
+                console.error('View file error:', error);
+                showAlert('Failed to view file - it may be corrupted or the retransmission is in progress', 'error');
+                addMessage(`File viewing error: ${error.message}`, 'system');
+            }
+        }
+        
+        async function endWorkspace() {
+            if (currentUser !== workspaceCreator) {
+                showAlert('Only the workspace creator can end the workspace', 'error');
+                return;
+            }
+            
+            if (!confirm('Are you sure you want to end this workspace? This will remove all users and delete the workspace permanently.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/workspace/${encodeURIComponent(currentRoom)}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    showAlert('Workspace ended successfully', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/get-started.html';
+                    }, 1000);
+                } else {
+                    const error = await response.json();
+                    showAlert(error.error || 'Failed to end workspace', 'error');
+                }
+            } catch (error) {
+                console.error('End workspace error:', error);
+                showAlert('Network error while ending workspace', 'error');
+            }
+        }
+        
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alertDiv);
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            }
+        }
+        
+        // Enable send button when file is selected
+        document.getElementById('fileInput').addEventListener('change', function() {
+            document.getElementById('sendBtn').disabled = !this.files[0];
+        });
+        
+        // Initialize on page load
+        initializeWorkspace();
+    </script>
+</body>
+</html>
